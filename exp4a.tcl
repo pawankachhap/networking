@@ -4,10 +4,10 @@
 #Create a ns simulator
 set ns [new Simulator]
 #Open the NS trace file
-settracefile [open out.tr w]
+set tracefile [open out.tr w]
 $ns trace-all $tracefile
 #Open the NAM trace file
-setnamfile [open out.nam w]
+set namfile [open out.nam w]
 $ns namtrace-all $namfile
 
 #===================================
@@ -30,10 +30,10 @@ $ns queue-limit $n1 $n2 10
 #$ns duplex-link-op $n1 $n2 orient right
 #######################
 #1.to create drop scenario at first node itself ----- >> change the packet size of application
-protocol and packet size of Transport
+#protocol and packet size of Transport
 # layere.g packet size of cbr =10000 , packet size of tcp =100
 #2. Drop at n1 = set queue size ratio to be 5:2 ,BWXDelay between no and n1 = 10Mb X
-0.05ms , between n1 and n2 0.05Mb X 100ms
+#0.05ms , between n1 and n2 0.05Mb X 100ms
 #3 .to count the number of packets dropped grep -c "^d" out.tr
 
 #===================================
@@ -62,11 +62,11 @@ $ns at 10.0 "$cbr0 stop"
 #===================================
 #Define a 'finish' procedure
 proc finish {} {
-global ns tracefilenamfile
+global ns tracefile namfile
 $ns flush-trace
 close $tracefile
 close $namfile
-execnamout.nam&
+exec nam out.nam &
 exit 0
 }
 $ns at 10.0 "finish"
