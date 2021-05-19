@@ -1,0 +1,14 @@
+4(a) Simulate three nodes point-to-point networks with a duplex link between
+them. Set the queue size and vary the bandwidth and find the number of packets
+dropped.
+
+4(b)  Simulate a transmission of ping message over a network topology consisting
+of 6 nodes and find the number of packets dropped due to congestion.
+
+4(c)  Simulate an Ethernet LAN with TCL script and simulate using ns2.
+
+4(d) Simulate simple ESS with transmitting nodes in wireless LAN by simulation
+and determine the performance w.r.t transmission of packets
+
+4(e) Implement and study the performance of GSM on NS2 (Using MAC layer)
+or equivalent environment.
