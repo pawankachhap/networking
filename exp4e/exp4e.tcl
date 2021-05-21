@@ -14,23 +14,28 @@ set val(rp) AODV ;# routing protocol
 set val(x) 1052 ;# X dimension of topography
 set val(y) 600 ;# Y dimension of topography
 set val(stop) 10.0 ;# time of simulation end
+
 #===================================
 # Initialization
 #===================================
 #Create a ns simulator
 set ns [new Simulator]
+
 #Setup topography object
 set topo [new Topography]
 $topo load_flatgrid $val(x) $val(y)
 create-god $val(nn)
+
 #Open the NS trace file
 set tracefile [open out.tr w]
 $ns trace-all $tracefile
+
 #Open the NAM trace file
 set namfile [open out.nam w]
 $ns namtrace-all $namfile
 $ns namtrace-all-wireless $namfile $val(x) $val(y)
 set chan [new $val(chan)];#Create wireless channel
+
 #===================================
 # Mobile node parameter setup
 #===================================
@@ -48,6 +53,7 @@ $ns node-config -adhocRouting $val(rp) \
 -routerTrace ON \
 -macTrace ON \
 -movementTrace ON
+
 #===================================
 # Nodes Definition
 #===================================
@@ -82,10 +88,12 @@ $n5 set X_ 305
 $n5 set Y_ 72
 $n5 set Z_ 0.0
 $ns initial_node_pos $n5 20
+
 #===================================
 # Generate movement
 #===================================
 $ns at 2 " $n5 setdest 900 72 75 "
+
 #===================================
 # Agents Definition
 #===================================
@@ -96,6 +104,7 @@ set sink1 [new Agent/TCPSink]
 $ns attach-agent $n5 $sink1
 $ns connect $tcp0 $sink1
 $tcp0 set packetSize_ 1500
+
 #===================================
 # Applications Definition
 #===================================
@@ -104,6 +113,7 @@ set ftp0 [new Application/FTP]
 $ftp0 attach-agent $tcp0
 $ns at 1.0 "$ftp0 start"
 $ns at 10.0 "$ftp0 stop"
+
 #===================================
 # Termination
 #===================================
@@ -116,9 +126,11 @@ close $namfile
 exec nam out.nam &
 exit 0
 }
+
 for {set i 0} {$i < $val(nn) } { incr i } {
 $ns at $val(stop) "\$n$i reset"
 }
+
 $ns at $val(stop) "$ns nam-end-wireless $val(stop)"
 $ns at $val(stop) "finish"
 $ns at $val(stop) "puts \"done\" ; $ns halt"
