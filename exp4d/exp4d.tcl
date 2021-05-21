@@ -3,12 +3,14 @@ set ns [new Simulator]
 #setup trace support by opening file lab4.tr and call the procedure trace-all
 set tf [open lab4.tr w]
 $ns trace-all $tf
+
 #create a topology object that keeps track of movements of mobile nodes within the
-topological boundary.
+#topological boundary.
 set topo [new Topography]
 $topo load_flatgrid 1000 1000
 set nf [open lab4.nam w]
 $ns namtrace-all-wireless $nf 1000 1000
+
 # creating a wireless node you MUST first select (configure) the node configuration
 # parameters to "become" a wireless node.
 $ns node-config -adhocRouting DSDV \
@@ -23,6 +25,7 @@ $ns node-config -adhocRouting DSDV \
 -topoInstance $topo \
 -agentTrace ON \
 -routerTrace ON
+
 # Create god object
 create-god 3
 set n0 [$ns node]
@@ -61,6 +64,8 @@ $ns at 5 "$ftp0 start"
 $ns at 5 "$ftp1 start"
 $ns at 100 "$n1 setdest 550 550 15"
 $ns at 190 "$n1 setdest 70 70 15"
+
+# Termination
 proc finish { } {
 global ns nf tf
 $ns flush-trace
